@@ -20,8 +20,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 @Slf4j      // creates log object by lombok
 @Controller
 public class ContactController {
-
-    private final ContactService contactService;
+     private final ContactService contactService;
 
     @Autowired
     public ContactController(ContactService contactService) {
@@ -53,8 +52,6 @@ public class ContactController {
         }
 
         contactService.saveMessageDetails(contact);
-        contactService.setCounter(contactService.getCounter() + 1);
-        log.info("Submitted " + contactService.getCounter() + " times.");
         return "redirect:/contact"; //return new contact form
     }
 
