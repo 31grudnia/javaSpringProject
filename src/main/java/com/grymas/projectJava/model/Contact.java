@@ -1,15 +1,20 @@
 package com.grymas.projectJava.model;
 
 import lombok.Data;
+import org.hibernate.annotations.GenericGenerator;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
+import javax.persistence.*;
+import javax.validation.constraints.*;
 
 @Data   // Data is from lombok library, provides getters, setters etc. methods and Constructor at compile time.
+@Entity
+@Table(name = "contact_msg")
 public class Contact extends BaseEntity{
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO,generator="native")
+    @GenericGenerator(name = "native",strategy = "native")
+    @Column(name = "contact_id")
     private int contactId;
 
     //  @NotNull: Checks if a given field is not null but allows empty values & zero elements inside collections.

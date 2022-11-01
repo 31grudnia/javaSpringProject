@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.stereotype.Repository;
+import org.springframework.data.repository.CrudRepository;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -21,19 +22,7 @@ type to the Spring context and indicate that given Bean is used to perform
 DB related operations and
 * */
 @Repository
-public class HolidaysRepository {
+public interface HolidaysRepository extends CrudRepository<Holiday, String>  {
 
-    private final JdbcTemplate jdbcTemplate;
-
-    @Autowired
-    public HolidaysRepository(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
-
-    public List<Holiday> findAllHolidays() {
-        String sql = "SELECT * FROM holidays";
-        var rowMapper = BeanPropertyRowMapper.newInstance(Holiday.class);
-        return jdbcTemplate.query(sql, rowMapper);
-    }
 
 }
