@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.util.logging.Level;
 
 @Slf4j
 @Aspect
@@ -19,17 +18,17 @@ public class LoggerAspect {
 
     @Around("execution(* com.grymas.projectJava..*.*(..))")
     public Object log(ProceedingJoinPoint joinPoint) throws Throwable {
-        log.info(joinPoint.getSignature().toString() + " method execution start.");
+        log.info(joinPoint.getSignature().toString() + " method execution start");
         Instant start = Instant.now();
         Object returnObj = joinPoint.proceed();
         Instant finish = Instant.now();
         long timeElapsed = Duration.between(start, finish).toMillis();
         log.info("Time took to execute " + joinPoint.getSignature().toString() + " method is : "+timeElapsed);
-        log.info(joinPoint.getSignature().toString() + " method execution end.");
+        log.info(joinPoint.getSignature().toString() + " method execution end");
         return returnObj;
     }
 
-    @AfterThrowing(value = "execution(* com.grymas.projectJava.*.*(..))", throwing = "ex")
+    @AfterThrowing(value = "execution(* com.grymas.projectJava.*.*(..))",throwing = "ex")
     public void logException(JoinPoint joinPoint, Exception ex) {
         log.error(joinPoint.getSignature()+ " An exception happened due to : "+ex.getMessage());
     }

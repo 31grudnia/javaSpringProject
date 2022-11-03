@@ -32,30 +32,30 @@ public class Person extends BaseEntity{
     @GenericGenerator(name = "native",strategy = "native")
     private int personId;
 
-    @NotBlank(message="Name must not be blank!")
-    @Size(min=3, message="Name must be at least 3 characters long!")
+    @NotBlank(message="Name must not be blank")
+    @Size(min=3, message="Name must be at least 3 characters long")
     private String name;
 
-    @NotBlank(message="Mobile number must not be blank!")
-    @Pattern(regexp="(^$|[0-9]{9})",message = "Mobile number must be 9 digits!")
+    @NotBlank(message="Mobile number must not be blank")
+    @Pattern(regexp="(^$|[0-9]{9})", message = "Mobile number must be 9 digits")
     private String mobileNumber;
 
-    @NotBlank(message="Email must not be blank!")
-    @Email(message = "Please provide a valid email address!" )
+    @NotBlank(message="Email must not be blank")
+    @Email(message = "Please provide a valid email address" )
     private String email;
 
-    @NotBlank(message="Confirm Email must not be blank!")
-    @Email(message = "Please provide a valid confirm email address!")
+    @NotBlank(message="Confirm Email must not be blank")
+    @Email(message = "Please provide a valid confirm email address" )
     @Transient
     private String confirmEmail;
 
-    @NotBlank(message="Password must not be blank!")
-    @Size(min=5, message="Password must be at least 5 characters long!")
+    @NotBlank(message="Password must not be blank")
+    @Size(min=5, message="Password must be at least 5 characters long")
     @PasswordValidator
     private String pwd;
 
-    @NotBlank(message="Confirm Password must not be blank!")
-    @Size(min=5, message="Confirm Password must be at least 5 characters long!")
+    @NotBlank(message="Confirm Password must not be blank")
+    @Size(min=5, message="Confirm Password must be at least 5 characters long")
     @Transient
     private String confirmPwd;
 

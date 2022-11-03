@@ -1,4 +1,4 @@
-package com.grymas.projectJava.audit;   
+package com.grymas.projectJava.audit;
 
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.security.core.context.SecurityContextHolder;

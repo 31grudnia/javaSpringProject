@@ -1,17 +1,9 @@
 package com.grymas.projectJava.repository;
 
 import com.grymas.projectJava.model.Contact;
-import com.grymas.projectJava.rowmappers.ContactRowMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.stereotype.Repository;
 
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.List;
 
 /*
