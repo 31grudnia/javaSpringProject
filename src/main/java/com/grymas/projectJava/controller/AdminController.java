@@ -8,6 +8,7 @@ import com.grymas.projectJava.repository.CoursesRepository;
 import com.grymas.projectJava.repository.PersonRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -107,7 +108,8 @@ public class AdminController {
 
     @GetMapping("/displayCourses")
     public ModelAndView displayCourses(Model model) {
-        List<Courses> courses = coursesRepository.findAll();
+//        List<Courses> courses = coursesRepository.findByOrderByNameDesc();
+        List<Courses> courses = coursesRepository.findAll(Sort.by("name").descending());
         ModelAndView modelAndView = new ModelAndView("courses_secure.html");
         modelAndView.addObject("courses",courses);
         modelAndView.addObject("course", new Courses());
@@ -139,8 +141,7 @@ public class AdminController {
     }
 
     @PostMapping("/addStudentToCourse")
-    public ModelAndView addStudentToCourse(Model model, @ModelAttribute("person") Person person,
-                                           HttpSession session) {
+    public ModelAndView addStudentToCourse(Model model, @ModelAttribute("person") Person person, HttpSession session) {
         ModelAndView modelAndView = new ModelAndView();
         Courses courses = (Courses) session.getAttribute("courses");
         Person personEntity = personRepository.readByEmail(person.getEmail());
