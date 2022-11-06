@@ -29,7 +29,7 @@ public class ContactService {
 
 
     // Save detials of msg into DB and return bool
-    public boolean saveMessageDetails(Contact contact){
+    public boolean saveMessageDetails(Contact contact) {
         boolean isSaved = false;
         contact.setStatus(SchoolConstants.OPEN);
         Contact savedContact = contactRepository.save(contact);
@@ -39,7 +39,7 @@ public class ContactService {
         return isSaved;
     }
 
-    public Page<Contact> findMsgsWithOpenStatus(int pageNum, String sortField, String sortDir){
+    public Page<Contact> findMsgsWithOpenStatus(int pageNum, String sortField, String sortDir) {
         int pageSize = 5;
         Pageable pageable = PageRequest.of(pageNum - 1, pageSize,
                 sortDir.equals("asc") ? Sort.by(sortField).ascending() : Sort.by(sortField).descending());
@@ -47,14 +47,10 @@ public class ContactService {
         return msgPage;
     }
 
-    public boolean updateMsgStatus(int contactId){
+    public boolean updateMsgStatus(int contactId) {
         boolean isUpdated = false;
-        Optional<Contact> contact = contactRepository.findById(contactId);
-        contact.ifPresent(contact1 -> {
-            contact1.setStatus(SchoolConstants.CLOSE);
-        });
-        Contact updatedContact = contactRepository.save(contact.get());
-        if(null != updatedContact && updatedContact.getUpdatedBy()!=null) {
+        int rows = contactRepository.updateMsgStatusNative(SchoolConstants.CLOSE,contactId);
+        if(rows > 0) {
             isUpdated = true;
         }
         return isUpdated;
