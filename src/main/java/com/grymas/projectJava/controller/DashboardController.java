@@ -4,6 +4,8 @@ import com.grymas.projectJava.model.Person;
 import com.grymas.projectJava.repository.PersonRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -24,6 +26,15 @@ public class DashboardController {
     @Autowired
     PersonRepository personRepository;
 
+    @Value("${school.pageSize}")
+    private int defaultPageSize;
+
+    @Value("${school.contact.successMsg}")
+    private String message;
+
+    @Autowired
+    Environment environment;
+
     @RequestMapping("/dashboard")
     public String displayDashboard(Model model,Authentication authentication, HttpSession session) {
         Person person = personRepository.readByEmail(authentication.getName());
@@ -33,7 +44,23 @@ public class DashboardController {
             model.addAttribute("enrolledClass", person.getEClass().getName());
         }
         session.setAttribute("loggedInPerson", person);
+        logMessages();
         return "dashboard.html";
+    }
+
+    private void logMessages() {
+        log.error("Error message from the Dashboard page");
+        log.warn("Warning message from the Dashboard page");
+        log.info("Info message from the Dashboard page");
+        log.debug("Debug message from the Dashboard page");
+        log.trace("Trace message from the Dashboard page");
+
+        log.error("defaultPageSize value with @Value annotation is : "+defaultPageSize);
+        log.error("successMsg value with @Value annotation is : "+message);
+
+        log.error("defaultPageSize value with Environment is : "+environment.getProperty("school.pageSize"));
+        log.error("successMsg value with Environment is : "+environment.getProperty("school.contact.successMsg"));
+
     }
 
 }

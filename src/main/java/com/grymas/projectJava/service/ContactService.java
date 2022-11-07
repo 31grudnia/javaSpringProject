@@ -1,6 +1,7 @@
 package com.grymas.projectJava.service;
 
 
+import com.grymas.projectJava.config.SchoolProps;
 import com.grymas.projectJava.constants.SchoolConstants;
 import com.grymas.projectJava.controller.ContactController;
 import com.grymas.projectJava.model.Contact;
@@ -27,6 +28,9 @@ public class ContactService {
     @Autowired
     private ContactRepository contactRepository;
 
+    @Autowired
+    SchoolProps schoolProps;
+
 
     // Save detials of msg into DB and return bool
     public boolean saveMessageDetails(Contact contact) {
@@ -40,7 +44,10 @@ public class ContactService {
     }
 
     public Page<Contact> findMsgsWithOpenStatus(int pageNum, String sortField, String sortDir) {
-        int pageSize = 5;
+        int pageSize = schoolProps.getPageSize();
+        if(null!=schoolProps.getContact() && null!=schoolProps.getContact().get("pageSize")){
+            pageSize = Integer.parseInt(schoolProps.getContact().get("pageSize").trim());
+        }
         Pageable pageable = PageRequest.of(pageNum - 1, pageSize,
                 sortDir.equals("asc") ? Sort.by(sortField).ascending() : Sort.by(sortField).descending());
         Page<Contact> msgPage = contactRepository.findByStatusWithQuery(SchoolConstants.OPEN,pageable);
