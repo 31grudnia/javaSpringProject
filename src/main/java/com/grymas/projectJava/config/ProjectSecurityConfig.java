@@ -14,14 +14,16 @@ public class ProjectSecurityConfig {
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
 
         http.csrf().ignoringAntMatchers("/saveMsg").ignoringAntMatchers("/public/**")
-                .ignoringAntMatchers("/api/**").ignoringAntMatchers("/data-api/**").and()
-                .authorizeRequests()
+                .ignoringAntMatchers("/api/**").ignoringAntMatchers("/data-api/**")
+                .ignoringAntMatchers("/school/actuator/**")
+                .and().authorizeRequests()
                 .mvcMatchers("/dashboard").authenticated()
                 .mvcMatchers("/displayProfile").authenticated()
                 .mvcMatchers("/updateProfile").authenticated()
                 .mvcMatchers("/student/**").hasRole("STUDENT")
                 .mvcMatchers("/displayMessages").hasRole("ADMIN")
                 .mvcMatchers("/admin/**").hasRole("ADMIN")
+                .mvcMatchers("/school/actuator/**").hasRole("ADMIN")
                 .mvcMatchers("/api/**").authenticated()
                 .mvcMatchers("/data-api/**").authenticated()
                 .mvcMatchers("/home").permitAll()
